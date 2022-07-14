@@ -1,6 +1,6 @@
 # Arduino Time Library
 
-Time is a library that provides timekeeping functionality for Arduino.
+Time is a library that provides timekeeping functionality for Arduino and ESP32.
 
 Using the Arduino Library Manager, install "*Time* by *Michael Margolis*".
 

@@ -26,7 +26,10 @@
                      examples, add error checking and messages to RTC examples,
                      add examples to DS1307RTC library.
   1.4  5  Sep 2014 - compatibility with Arduino 1.5.7
-  1.5  14 Jul 2022 - fixed "conflicting declaration 'typedef time_t'" on ESP32 enviroment. 
+
+  -------------------------------- Time32 ------------------------------------------------
+  
+  1.0  14 Jul 2022 - fixed "conflicting declaration 'typedef time_t'" on ESP32 enviroment. 
                    - added typedef time32_t to avoid conflict with newlib or other libs.
                    - added support fix 2106 problem. Tested until 31th December of 16383.
                    - added leap_seconds function to calc leap seconds. 

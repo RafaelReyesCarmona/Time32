@@ -9,16 +9,16 @@
         {
             "name": "Rafael Reyes",
             "email": "rafael.reyes.carmona@gmail.com",
-            "url": "",
+            "url": "https://github.com/RafaelReyesCarmona/Time32",
             "maintainer": true
         }
     ],
     "repository": {
         "type": "git",
-         "url": "https://github.com/PaulStoffregen/Time32"
+         "url": "https://github.com/RafaelReyesCarmona/Time32.git"
     },
-    "version": "1.5",
-    "homepage": "http://playground.arduino.cc/Code/Time32",
+    "version": "1.0",
+    "homepage": "https://github.com/RafaelReyesCarmona/Time32",
     "frameworks": "Arduino",
     "examples": [
         "examples/*/*.ino"
