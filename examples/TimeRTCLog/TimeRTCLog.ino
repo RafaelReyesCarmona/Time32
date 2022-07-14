@@ -6,6 +6,8 @@
  * the time of the event and time since the previous event is calculated and sent to the serial port.
  */
 
+#define USE_UINT64_T 0  // USE_UINT64_T 1 only on ESP32 to fix 2106 problem.
+
 #include <TimeLib32.h>
 #include <Wire.h>
 #include <DS1307RTC.h>  // a basic DS1307 library that returns time as a time_t

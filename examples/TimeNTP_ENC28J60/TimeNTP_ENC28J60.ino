@@ -7,7 +7,9 @@
  * This sketch uses the EtherCard library:
  * http://jeelabs.org/pub/docs/ethercard/
  */
- 
+
+#define USE_UINT64_T 0  // USE_UINT64_T 1 only on ESP32 to fix 2106 problem.
+
 #include <TimeLib32.h>
 #include <EtherCard.h>
 

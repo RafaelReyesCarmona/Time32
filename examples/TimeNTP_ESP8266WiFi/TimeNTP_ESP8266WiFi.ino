@@ -5,6 +5,8 @@
  * This sketch uses the ESP8266WiFi library
  */
 
+#define USE_UINT64_T 0  // USE_UINT64_T 1 only on ESP32 to fix 2106 problem.
+
 #include <TimeLib32.h>
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>

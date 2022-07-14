@@ -9,7 +9,9 @@
  * A Processing example sketch to automatically send the messages is included in the download
  * On Linux, you can use "date +T%s\n > /dev/ttyACM0" (UTC time zone)
  */ 
- 
+
+#define USE_UINT64_T 0  // USE_UINT64_T 1 only on ESP32 to fix 2106 problem.
+
 #include <TimeLib32.h>
 
 #define TIME_HEADER  "T"   // Header tag for serial time sync message
