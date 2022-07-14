@@ -1,0 +1,26 @@
+{
+    "name": "Time32",
+    "description": "Time keeping library fix 2106 effect.",
+    "keywords": "Time, date, hour, minute, second, day, week, month, year, RTC",
+    "authors": [
+        {
+            "name": "Michael Margolis"
+        },
+        {
+            "name": "Rafael Reyes",
+            "email": "rafael.reyes.carmona@gmail.com",
+            "url": "",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "git",
+         "url": "https://github.com/PaulStoffregen/Time32"
+    },
+    "version": "1.5",
+    "homepage": "http://playground.arduino.cc/Code/Time32",
+    "frameworks": "Arduino",
+    "examples": [
+        "examples/*/*.ino"
+    ]
+}
