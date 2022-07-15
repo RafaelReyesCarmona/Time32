@@ -33,6 +33,8 @@
                    - added typedef time32_t to avoid conflict with newlib or other libs.
                    - added support fix 2106 problem. Tested until 31th December of 16383.
                    - added leap_seconds function to calc leap seconds. 
+  1.0.1 15 Jul 2022 - fixed 'setTime' to use new time32_t.
+                    - fixed return values of 'year'. 
 */
 
 #if ARDUINO >= 100
@@ -138,11 +140,11 @@ int month(time32_t t) {  // the month for the given time
   return tm.Month;
 }
 
-int year() {  // as in Processing, the full four digit year: (2009, 2010 etc) 
+uint16_t year() {  // as in Processing, the full four digit year: (2009, 2010 etc) 
   return year(now()); 
 }
 
-int year(time32_t t) { // the year for the given time
+uint16_t year(time32_t t) { // the year for the given time
   refreshCache(t);
   return tmYearToCalendar(tm.Year);
 }
@@ -215,7 +217,8 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
   tm.Day = time + 1;     // day of month
 }
 
-static uint32_t leap_seconds_time_t[] = {
+// Info from https://www.iana.org/time-zones Version 2022a tzdb-2022a.tar.lz.
+static const uint32_t leap_seconds_time_t[] = {
   (uint32_t)78796799,  // 1972 Jun 30 23:59:59 (+1)
   (uint32_t)94694399,  // 1972 Dec 31 23:59:59 (+1)
   (uint32_t)126230399, // 1973 Dec 31 23:59:59 (+1)
@@ -253,9 +256,7 @@ int leap_seconds(time32_t time){
   (time > (time32_t)63072000) ? leap_secs = 10 : leap_secs = 0; // 1972 Jan 1 00:00:00 (+10) Star leap seconds.
 
   for(int i = 0; i < sizeof(leap_seconds_time_t)/sizeof(leap_seconds_time_t[0]); i++){
-  //while(time > leap_seconds_time_t[i]){
     if(time > leap_seconds_time_t[i]) leap_secs++;
-    //i++;
   }
 
   return leap_secs;
@@ -346,9 +347,12 @@ void setTime(time32_t t) {
  if(sysUnsyncedTime == 0) 
    sysUnsyncedTime = t;   // store the time of the first call to set a valid Time   
 #endif
-
-  sysTime = (uint32_t)t;  
-  nextSyncTime = (uint32_t)t + syncInterval;
+#ifdef USE_UINT64_T
+  sysTime = (uint64_t)t;
+#else
+  sysTime = (uint32_t)t;
+#endif
+  nextSyncTime = sysTime + syncInterval;
   Status = timeSet;
   prevMillis = millis();  // restart counting from now (thanks to Korman for this fix)
 } 
