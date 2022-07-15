@@ -1,25 +1,34 @@
-# Arduino Time Library
+<img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
-Time is a library that provides timekeeping functionality for Arduino and ESP32.
+# Time32 Library
+[![Version: v1.0.1](https://img.shields.io/badge/Version-v1.0.1-blue?style=for-the-badge&logo=v)]()
 
-Using the Arduino Library Manager, install "*Time* by *Michael Margolis*".
+Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
-The code is derived from the Playground DateTime library but is updated
+Time32 is an adapted code from Time by *Michael Margolis*.
+
+The Time code is derived from the Playground DateTime library but is updated
 to provide an API that is more flexible and easier to use.
 
 A primary goal was to enable date and time functionality that can be used with
 a variety of external time sources with minimum differences required in sketch logic.
 
-Example sketches illustrate how similar sketch code can be used with: a Real Time Clock,
-internet NTP time service, GPS time data, and Serial time messages from a computer
-for time synchronization.
+Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
+enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
+And it add support to fix 2106 problem. New function is implemented to calc leap seconds.
+Info from https://www.iana.org/time-zones Version 2022a tzdb-2022a.tar.lz. Time32 had been
+tested until 31th December of 16383.
+
+Example sketches are updated to illustrate how similar sketch code can be used with: 
+a Real Time Clock, internet NTP time service, GPS time data, and Serial time messages 
+from a computer for time synchronization.
 
 ## Functionality
 
 To use the Time library in an Arduino sketch, include TimeLib.h.
 
 ```c
-#include <TimeLib.h>
+#include <TimeLib32.h>
 ```
 
 The functions available in the library include
@@ -50,7 +59,7 @@ between getting the minute and second, the values will be inconsistent. Using th
 following functions eliminates this problem
 
 ```c
-time_t t = now(); // store the current time in time variable t
+time32_t t = now(); // store the current time in time variable t
 hour(t);          // returns the hour for the given time t
 minute(t);        // returns the minute for the given time t
 second(t);        // returns the second for the given time t
@@ -58,6 +67,7 @@ day(t);           // the day for the given time t
 weekday(t);       // day of the week for the given time t
 month(t);         // the month for the given time t
 year(t);          // the year for the given time t
+leap_seconds(t);  // returns leap seconds for the given time t
 ```
 
 Functions for managing the timer services are:
@@ -82,14 +92,14 @@ setSyncProvider(getTimeFunction);  // set the external time provider
 setSyncInterval(interval);         // set the number of seconds between re-sync
 ```
 
-There are many convenience macros in the `time.h` file for time constants and conversion
+There are many convenience macros in the `TimeLib32.h` file for time constants and conversion
 of time units.
 
 To use the library, copy the download to the Library directory.
 
 ## Examples
 
-The Time directory contains the Time library and some example sketches
+The Time32 directory contains the Time32 library and some example sketches
 illustrating how the library can be used with various time sources:
 
 - `TimeSerial.pde` shows Arduino as a clock without external hardware.
@@ -120,9 +130,14 @@ illustrating how the library can be used with various time sources:
   This requires the TinyGPS library from Mikal Hart:
   <http://arduiniana.org/libraries/TinyGPS>
 
-## Differences
+- `ESP32` show the use of the library on ESP32 boards. This calc the Sunrise, Sunset and Solar Noon
+  of a location for a entire year.
+  This requires the Timezone32 and Sunrise libraries. See in my GitHub:
+  <https://github.com/RafaelReyesCarmona> 
 
-Differences between this code and the playground DateTime library
+## Differences for Time by *Michael Margolis*
+
+Differences between Time code and the playground DateTime library
 although the Time library is based on the DateTime codebase, the API has changed.
 Changes in the Time library API:
 
@@ -142,15 +157,15 @@ System time begins at zero when the sketch starts.
 
 The internal time can be automatically synchronized at regular intervals to an external time source.
 This is enabled by calling the `setSyncProvider(provider)` function - the provider argument is
-the address of a function that returns the current time as a `time_t`.
+the address of a function that returns the current time as a `time32_t`.
 See the sketches in the examples directory for usage.
 
 The default interval for re-syncing the time is 5 minutes but can be changed by calling the
 `setSyncInterval(interval)` method to set the number of seconds between re-sync attempts.
 
-The Time library defines a structure for holding time elements that is a compact version of the C `tm` structure.
-All the members of the Arduino `tm` structure are bytes and the year is offset from 1970.
-Convenience macros provide conversion to and from the Arduino format.
+The Time32 library defines a structure for holding time elements that is a compact version of the C `tm` structure.
+All the members of the `tm` structure are bytes excepts year that is 16bits. The year is offset from 1970.
+Convenience macros provide conversion for make use more easy.
 
 Low-level functions to convert between system time and individual time elements are provided:
 
@@ -158,8 +173,44 @@ Low-level functions to convert between system time and individual time elements 
 breakTime(time, &tm);  // break time_t into elements stored in tm struct
 makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
+## Changelog
+### V1.0.1
+  * fixed 'setTime' to use new time32_t.
+  * fixed return values of 'year'. 
+### V1.0
+  * fixed "conflicting declaration 'typedef time_t'" on ESP32 enviroment. 
+  * added typedef time32_t to avoid conflict with newlib or other libs.
+  * added support fix 2106 problem. Tested until 31th December of 16383.
+  * added leap_seconds function to calc leap seconds. 
+### Time by *Michael Margolis*
+  * 1.0  6  Jan 2010 - initial release
+  * 1.1  12 Feb 2010 - fixed leap year calculation error
+  * 1.2  1  Nov 2010 - fixed setTime bug (thanks to Korman for this)
+  * 1.3  24 Mar 2012 - many edits by Paul Stoffregen: fixed timeStatus() to update
+                     status, updated examples for Arduino 1.0, fixed ARM
+                     compatibility issues, added TimeArduinoDue and TimeTeensy3
+                     examples, add error checking and messages to RTC examples,
+                     add examples to DS1307RTC library.
+  * 1.4  5  Sep 2014 - compatibility with Arduino 1.5.7
+## License
 
-This [DS1307RTC library][1] provides an example of how a time provider
-can use the low-level functions to interface with the Time library.
+This file is part of Time32 Library.
 
-[1]:<https://github.com/PaulStoffregen/DS1307RTC>
+Time32 Library is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Time32 Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Time32 Library.  If not, see <https://www.gnu.org/licenses/>.
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+
+## Authors
+### Time32
+Copyright © 2022 Francisco Rafael Reyes Carmona.
+Contact me: rafael.reyes.carmona@gmail.com
+
+### Time
+Copyright (c) Michael Margolis 2009-2014
+## Credits
+
+<a target="_blank" href="https://icons8.com/icon/QDgOnr6UAOmg/time-machine">Time Machine</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
