@@ -17,7 +17,7 @@
         "type": "git",
          "url": "https://github.com/RafaelReyesCarmona/Time32.git"
     },
-    "version": "1.0",
+    "version": "1.0.1",
     "homepage": "https://github.com/RafaelReyesCarmona/Time32",
     "frameworks": "Arduino",
     "examples": [
