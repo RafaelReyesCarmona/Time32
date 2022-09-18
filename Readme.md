@@ -1,7 +1,7 @@
 <img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
 # Time32 Library
-[![Version: v1.0.1](https://img.shields.io/badge/Version-v1.0.1-blue?style=for-the-badge&logo=v)]()
+[![Version: v1.1](https://img.shields.io/badge/Version-v1.1-blue?style=for-the-badge&logo=v)]()
 
 Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
@@ -174,6 +174,8 @@ breakTime(time, &tm);  // break time_t into elements stored in tm struct
 makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
 ## Changelog
+### V1.1
+  * Added 'Spanish' language support.
 ### V1.0.1
   * fixed 'setTime' to use new time32_t.
   * fixed return values of 'year'. 

@@ -28,6 +28,10 @@ monthStr        KEYWORD2
 dayStr          KEYWORD2
 monthShortStr   KEYWORD2
 dayShortStr     KEYWORD2
+monthStr_es     KEYWORD2
+dayStr_es       KEYWORD2
+monthShortStr_es   KEYWORD2
+dayShortStr_es  KEYWORD2
 timeStatus      KEYWORD2
 setSyncProvider KEYWORD2
 setSyncInterval KEYWORD2

@@ -141,6 +141,13 @@ char* monthStr(uint8_t month);
 char* dayStr(uint8_t day);
 char* monthShortStr(uint8_t month);
 char* dayShortStr(uint8_t day);
+
+/* date strings Spanish*/ 
+#define dt_MAX_STRING_LEN_ES 10 // length of longest date string (excluding terminating null)
+char* monthStr_es(uint8_t month);
+char* dayStr_es(uint8_t day);
+char* monthShortStr_es(uint8_t month);
+char* dayShortStr_es(uint8_t day);
 	
 /* time sync functions	*/
 timeStatus_t timeStatus(); // indicates if time has been set and recently synchronized
