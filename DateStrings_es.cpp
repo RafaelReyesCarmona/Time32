@@ -39,7 +39,7 @@ const char monthStr8_es[] PROGMEM = "Agosto";
 const char monthStr9_es[] PROGMEM = "Septiembre";
 const char monthStr10_es[] PROGMEM = "Octubre";
 const char monthStr11_es[] PROGMEM = "Noviembre";
-const char monthStr12_es[] PROGMEM = "Deciembre";
+const char monthStr12_es[] PROGMEM = "Diciembre";
 
 const PROGMEM char * const PROGMEM monthNames_P_es[] =
 {
@@ -47,13 +47,13 @@ const PROGMEM char * const PROGMEM monthNames_P_es[] =
     monthStr7_es,monthStr8_es,monthStr9_es,monthStr10_es,monthStr11_es,monthStr12_es
 };
 
-const char monthShortNames_P_es[] PROGMEM = "ErrJanFebMarAprMayJunJulAugSepOctNovDec";
+const char monthShortNames_P_es[] PROGMEM = "ErrEneFebMarAbrMayJunJulAgoSepOctNovDic";
 
 const char dayStr0_es[] PROGMEM = "Err";
 const char dayStr1_es[] PROGMEM = "Domingo";
 const char dayStr2_es[] PROGMEM = "Lunes";
 const char dayStr3_es[] PROGMEM = "Martes";
-const char dayStr4_es[] PROGMEM = "Miércoeles";
+const char dayStr4_es[] PROGMEM = "Miércoles";
 const char dayStr5_es[] PROGMEM = "Jueves";
 const char dayStr6_es[] PROGMEM = "Viernes";
 const char dayStr7_es[] PROGMEM = "Sábado";

@@ -36,6 +36,7 @@
   1.0.1 15 Jul 2022 - fixed 'setTime' to use new time32_t.
                     - fixed return values of 'year'. 
   1.1  18 Jul 2022 - added 'Spanish' language support.
+  1.1.1 5 Dec 2022 - fixed some spanish words.
 */
 
 #if ARDUINO >= 100

@@ -174,6 +174,9 @@ breakTime(time, &tm);  // break time_t into elements stored in tm struct
 makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
 ## Changelog
+
+### V1.1.1
+  * Fixed some spanish words.
 ### V1.1
   * Added 'Spanish' language support.
 ### V1.0.1
