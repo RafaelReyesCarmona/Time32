@@ -1,7 +1,7 @@
 <img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
 # Time32 Library
-[![Version: v1.1](https://img.shields.io/badge/Version-v1.1-blue?style=for-the-badge&logo=v)]()
+[![Version: v1.1.2](https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge&logo=v)]()
 
 Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
@@ -16,8 +16,8 @@ a variety of external time sources with minimum differences required in sketch l
 Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
 enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
 And it add support to fix 2106 problem. New function is implemented to calc leap seconds.
-Info from https://www.iana.org/time-zones Version 2022a tzdb-2022a.tar.lz. Time32 had been
-tested until 31th December of 16383.
+Info from https://www.iana.org/time-zones Version 2023c tzdb-2023c.tar.lz. Leap seconds info
+is valid until 28th December of 2023. Time32 had been tested until 31th December of 16383.
 
 Example sketches are updated to illustrate how similar sketch code can be used with: 
 a Real Time Clock, internet NTP time service, GPS time data, and Serial time messages 
@@ -175,6 +175,8 @@ makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
 ## Changelog
 
+### V1.1.2
+  * Fixed leap_seconds function and data.
 ### V1.1.1
   * Fixed some spanish words.
 ### V1.1

@@ -9,6 +9,7 @@
               - added typedef time32_t to avoid conflict with newlib or other libs.
               - added support fix 2106 problem. Tested until 31th December of 16383.
               - added leap_seconds function to calc leap seconds. 
+  April 05 2023 - fixed leap_seconds function and data.
 */     
 
 #ifndef _Time32_h
@@ -158,7 +159,7 @@ void    setSyncInterval(time32_t interval); // set the number of seconds between
 void breakTime(time32_t time, tmElements_t &tm);  // break time32_t into elements
 time32_t makeTime(const tmElements_t &tm);  // convert time elements into time32_t
 
-int leap_seconds(time32_t time); // Calculate leap seconds.
+unsigned int leap_seconds(time32_t time); // Calculate leap seconds.
 } // extern "C++"
 #endif // __cplusplus
 #endif /* _Time32_h */

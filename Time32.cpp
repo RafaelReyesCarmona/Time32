@@ -37,6 +37,7 @@
                     - fixed return values of 'year'. 
   1.1  18 Jul 2022 - added 'Spanish' language support.
   1.1.1 5 Dec 2022 - fixed some spanish words.
+  1.1.2 5 Apr 2023 - fixed leap_seconds function and data.
 */
 
 #if ARDUINO >= 100
@@ -132,7 +133,7 @@ int weekday(time32_t t) {
   refreshCache(t);
   return tm.Wday;
 }
-   
+
 int month(){
   return month(now()); 
 }
@@ -159,7 +160,7 @@ uint16_t year(time32_t t) { // the year for the given time
 #define LEAP_YEAR(Y)     ( ((1970+(Y))>0) && !((1970+(Y))%4) && ( ((1970+(Y))%100) || !((1970+(Y))%400) ) )
 
 static  const uint8_t monthDays[]={31,28,31,30,31,30,31,31,30,31,30,31}; // API starts months from 1, this array starts from 0
- 
+
 void breakTime(time32_t timeInput, tmElements_t &tm){
 // break the given time32_t into time components
 // this is a more compact version of the C library localtime function
@@ -219,7 +220,7 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
   tm.Day = time + 1;     // day of month
 }
 
-// Info from https://www.iana.org/time-zones Version 2022a tzdb-2022a.tar.lz.
+// Info from https://www.iana.org/time-zones Version 2023c (Released 2023-03-28) tzdb-2023c.tar.lz.
 static const uint32_t leap_seconds_time_t[] = {
   (uint32_t)78796799,  // 1972 Jun 30 23:59:59 (+1)
   (uint32_t)94694399,  // 1972 Dec 31 23:59:59 (+1)
@@ -248,16 +249,15 @@ static const uint32_t leap_seconds_time_t[] = {
   (uint32_t)1341100799,// 2012 Jun 30 23:59:59 (+1)
   (uint32_t)1435708799,// 2015 Jun 30 23:59:59 (+1)
   (uint32_t)1483228799,// 2016 Dec 31 23:59:59 (+1)
-  (uint32_t)1672531199,// 2022 Dec 31 23:59:59 (+1) //Notconfirmed jet//
   0xffffffff
 };
 
-int leap_seconds(time32_t time){
-  int leap_secs = 0;
+unsigned int leap_seconds(time32_t time){
+  unsigned int leap_secs = 0;
 
   (time > (time32_t)63072000) ? leap_secs = 10 : leap_secs = 0; // 1972 Jan 1 00:00:00 (+10) Star leap seconds.
 
-  for(int i = 0; i < sizeof(leap_seconds_time_t)/sizeof(leap_seconds_time_t[0]); i++){
+  for(unsigned int i = 0; i < sizeof(leap_seconds_time_t)/sizeof(leap_seconds_time_t[0]); i++){
     if(time > leap_seconds_time_t[i]) leap_secs++;
   }
 
