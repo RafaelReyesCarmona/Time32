@@ -10,6 +10,8 @@
               - added support fix 2106 problem. Tested until 31th December of 16383.
               - added leap_seconds function to calc leap seconds. 
   April 05 2023 - fixed leap_seconds function and data.
+  April 13 2023 - fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent
+			conflict with NEOGPS library. 
 */     
 
 #ifndef _Time32_h
@@ -81,8 +83,8 @@ typedef time32_t(*getExternalTime)();
 #define SECS_PER_MIN  ((time32_t)(60UL))
 #define SECS_PER_HOUR ((time32_t)(3600UL))
 #define SECS_PER_DAY  ((time32_t)(SECS_PER_HOUR * 24UL))
-#define DAYS_PER_WEEK ((time32_t)(7UL))
-#define SECS_PER_WEEK ((time32_t)(SECS_PER_DAY * DAYS_PER_WEEK))
+#define DAYS_PER_A_WEEK ((time32_t)(7UL))
+#define SECS_PER_WEEK ((time32_t)(SECS_PER_DAY * DAYS_PER_A_WEEK))
 #define SECS_PER_YEAR ((time32_t)(SECS_PER_DAY * 365UL)) // TODO: ought to handle leap years
 #define SECS_YR_2000  ((time32_t)(946684800UL)) // the time at the start of y2k
  
@@ -90,7 +92,7 @@ typedef time32_t(*getExternalTime)();
 #define numberOfSeconds(_time_) ((_time_) % SECS_PER_MIN)  
 #define numberOfMinutes(_time_) (((_time_) / SECS_PER_MIN) % SECS_PER_MIN) 
 #define numberOfHours(_time_) (((_time_) % SECS_PER_DAY) / SECS_PER_HOUR)
-#define dayOfWeek(_time_) ((((_time_) / SECS_PER_DAY + 4)  % DAYS_PER_WEEK)+1) // 1 = Sunday
+#define dayOfWeek(_time_) ((((_time_) / SECS_PER_DAY + 4)  % DAYS_PER_A_WEEK)+1) // 1 = Sunday
 #define elapsedDays(_time_) ((_time_) / SECS_PER_DAY)  // this is number of days since Jan 1 1970
 #define elapsedSecsToday(_time_) ((_time_) % SECS_PER_DAY)   // the number of seconds since last midnight 
 // The following macros are used in calculating alarms and assume the clock is set to a date later than Jan 1 1971

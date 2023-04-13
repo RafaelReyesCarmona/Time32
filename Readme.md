@@ -1,7 +1,7 @@
 <img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
 # Time32 Library
-[![Version: v1.1.2](https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge&logo=v)]()
+[![Version: v1.1.3](https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge&logo=v)]()
 
 Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
@@ -175,6 +175,8 @@ makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
 ## Changelog
 
+### V1.1.3
+  * Fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent a conflict with NEOGPS library.
 ### V1.1.2
   * Fixed leap_seconds function and data.
 ### V1.1.1

@@ -38,6 +38,8 @@
   1.1  18 Jul 2022 - added 'Spanish' language support.
   1.1.1 5 Dec 2022 - fixed some spanish words.
   1.1.2 5 Apr 2023 - fixed leap_seconds function and data.
+  1.1.3 13 Apr 2023 - fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent
+			conflict with NEOGPS library.
 */
 
 #if ARDUINO >= 100
