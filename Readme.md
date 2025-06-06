@@ -16,7 +16,7 @@ a variety of external time sources with minimum differences required in sketch l
 Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
 enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
 And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit is 65535 year. When use
-please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
+please set a max timestamp of 2005949141999. (Thanks to Francois Victor "rmslu" fvictor@gmail.lu for the test).
 
 New function is implemented to calc leap seconds.
 Info from https://www.iana.org/time-zones Version 2025b tzdb-2025b.tar.lz. Leap seconds info
