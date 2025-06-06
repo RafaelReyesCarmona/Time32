@@ -19,8 +19,8 @@ And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit i
 please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
 
 New function is implemented to calc leap seconds.
-Info from https://www.iana.org/time-zones Version 2023c tzdb-2023c.tar.lz. Leap seconds info
-is valid until 28th December of 2023. Time32 had been tested until 31th December of 16383.
+Info from https://www.iana.org/time-zones Version 2025b tzdb-2025b.tar.lz. Leap seconds info
+is valid until 28th December of 2025 00:00:00 UTC.
 
 Example sketches are updated to illustrate how similar sketch code can be used with: 
 a Real Time Clock, internet NTP time service, GPS time data, and Serial time messages 
