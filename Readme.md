@@ -43,7 +43,7 @@ second();          // the second now (0-59)
 day();             // the day now (1-31)
 weekday();         // day of the week (1-7), Sunday is day 1
 month();           // the month now (1-12)
-year();            // the full four digit year: (2009, 2010 etc)
+year();            // the full four/five digits year: from 1970 to 65535
 ```
 
 there are also functions to return the hour in 12-hour format
@@ -192,8 +192,7 @@ makeTime(&tm);         // return time_t from elements stored in tm struct
 ### V1.0
   * fixed "conflicting declaration 'typedef time_t'" on ESP32 enviroment. 
   * added typedef time32_t to avoid conflict with newlib or other libs.
-  * added support fix 2106 problem. Tested until 31th December of 16383. The limit is 65535 year. When use
-please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
+  * added support fix 2106 problem. Tested until 31th December of 16383. The limit is 65535 year. When use please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
   * added leap_seconds function to calc leap seconds. 
 ### Time by *Michael Margolis*
   * 1.0  6  Jan 2010 - initial release
