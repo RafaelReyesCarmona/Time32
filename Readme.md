@@ -80,11 +80,11 @@ setTime(t);                      // set the system time to the give time t
 setTime(hr,min,sec,day,mnth,yr); // alternative to above, yr is 2 or 4 digit yr
                                  // (2010 or 10 sets year to 2010)
 adjustTime(adjustment);          // adjust system time by adding the adjustment value
-timeStatus();                    // indicates if time has been set and recently synchronized
-                                 // returns one of the following enumerations:
-timeNotSet                       // the time has never been set, the clock started on Jan 1, 1970
-timeNeedsSync                    // the time had been set but a sync attempt did not succeed
-timeSet                          // the time is set and is synced
+timeStatus(); // indicates if time has been set and recently synchronized
+              // returns one of the following enumerations:
+              - timeNotSet    // the time has never been set, the clock started on Jan 1, 1970
+              - timeNeedsSync // the time had been set but a sync attempt did not succeed
+              - timeSet       // the time is set and is synced
 ```
 
 Time and Date values are not valid if the status is `timeNotSet`. Otherwise, values can be used but
