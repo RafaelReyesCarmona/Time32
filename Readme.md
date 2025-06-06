@@ -1,7 +1,7 @@
 <img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
 # Time32 Library
-[![Version: v1.1.3](https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge&logo=v)]()
+[![Version: v1.1.3](https://img.shields.io/badge/Version-v1.1.3-blue?style=for-the-badge&logo=v)]()
 
 Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
@@ -15,7 +15,10 @@ a variety of external time sources with minimum differences required in sketch l
 
 Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
 enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
-And it add support to fix 2106 problem. New function is implemented to calc leap seconds.
+And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit is 65535 year. When use
+please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
+
+New function is implemented to calc leap seconds.
 Info from https://www.iana.org/time-zones Version 2023c tzdb-2023c.tar.lz. Leap seconds info
 is valid until 28th December of 2023. Time32 had been tested until 31th December of 16383.
 
@@ -189,7 +192,8 @@ makeTime(&tm);         // return time_t from elements stored in tm struct
 ### V1.0
   * fixed "conflicting declaration 'typedef time_t'" on ESP32 enviroment. 
   * added typedef time32_t to avoid conflict with newlib or other libs.
-  * added support fix 2106 problem. Tested until 31th December of 16383.
+  * added support fix 2106 problem. Tested until 31th December of 16383. The limit is 65535 year. When use
+please set a max timestamp of 2005949141999. (Thanks to rmslu for the test).
   * added leap_seconds function to calc leap seconds. 
 ### Time by *Michael Margolis*
   * 1.0  6  Jan 2010 - initial release
