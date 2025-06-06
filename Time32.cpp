@@ -222,7 +222,7 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
   tm.Day = time + 1;     // day of month
 }
 
-// Info from https://www.iana.org/time-zones Version 2023c (Released 2023-03-28) tzdb-2023c.tar.lz.
+// Info from https://www.iana.org/time-zones Version 2025b (Released 2025-03-22) tzdb-2025b.tar.lz.
 static const uint32_t leap_seconds_time_t[] = {
   (uint32_t)78796799,  // 1972 Jun 30 23:59:59 (+1)
   (uint32_t)94694399,  // 1972 Dec 31 23:59:59 (+1)
