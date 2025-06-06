@@ -130,7 +130,7 @@ int     weekday();         // the weekday now (Sunday is day 1)
 int     weekday(time32_t t); // the weekday for the given time 
 int     month();           // the month now  (Jan is month 1)
 int     month(time32_t t);   // the month for the given time
-uint16_t     year();            // the full four digit year: (2009, 2010 etc) 
+uint16_t     year();            // the full four/five digit year: (from 1970 to 65535) 
 uint16_t     year(time32_t t);    // the year for the given time
 
 time32_t now();              // return the current time as seconds since Jan 1 1970 
