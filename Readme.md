@@ -16,7 +16,27 @@ a variety of external time sources with minimum differences required in sketch l
 Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
 enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
 And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit is 65535 year. When use
-please set a max timestamp of 2005949141999. (Thanks to Francois Victor "rmslu" fvictor@gmail.lu for the test).
+please set a max timestamp of 2005949145599. (Thanks to Francois Victor "rmslu" fvictor@gmail.lu for the test).
+
+Use "time32lib_test.ino" on example directory for test. 
+```
+EPOCH TIME: 2005949145590 Human: 23:59:50 - 31/12/65535 GMT
+EPOCH TIME: 2005949145591 Human: 23:59:51 - 31/12/65535 GMT
+EPOCH TIME: 2005949145592 Human: 23:59:52 - 31/12/65535 GMT
+EPOCH TIME: 2005949145593 Human: 23:59:53 - 31/12/65535 GMT
+EPOCH TIME: 2005949145594 Human: 23:59:54 - 31/12/65535 GMT
+EPOCH TIME: 2005949145595 Human: 23:59:55 - 31/12/65535 GMT
+EPOCH TIME: 2005949145596 Human: 23:59:56 - 31/12/65535 GMT
+EPOCH TIME: 2005949145597 Human: 23:59:57 - 31/12/65535 GMT
+EPOCH TIME: 2005949145598 Human: 23:59:58 - 31/12/65535 GMT
+EPOCH TIME: 2005949145599 Human: 23:59:59 - 31/12/65535 GMT
+EPOCH TIME: 2005949145600 Human: 0:00:00 - 1/1/0 GMT
+EPOCH TIME: 2005949145601 Human: 0:00:01 - 1/1/0 GMT
+EPOCH TIME: 2005949145602 Human: 0:00:02 - 1/1/0 GMT
+EPOCH TIME: 2005949145603 Human: 0:00:03 - 1/1/0 GMT
+EPOCH TIME: 2005949145604 Human: 0:00:04 - 1/1/0 GMT
+EPOCH TIME: 2005949145605 Human: 0:00:05 - 1/1/0 GMT
+```
 
 New function is implemented to calc leap seconds.
 Info from https://www.iana.org/time-zones Version 2025b tzdb-2025b.tar.lz. Leap seconds info
