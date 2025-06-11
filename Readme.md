@@ -158,7 +158,7 @@ illustrating how the library can be used with various time sources:
   This requires the Timezone32 and Sunrise libraries. See in my GitHub:
   <https://github.com/RafaelReyesCarmona> 
 
-  - `Time32Lib_test` is similar to TimeSerial, showing epoch unix time and human date conversion (GMT).
+- `Time32Lib_test` is similar to TimeSerial, showing epoch unix time and human date conversion (GMT).
   Use to testing epoch time conversion, using Serial Monitor to set the clock, send 'T2005949145590' 
   and wait ten seconds. 2005949145599 is the max value for the library.
 
