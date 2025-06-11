@@ -18,7 +18,7 @@ enviroments. It define new typedef time32_t to avoid conflict with newlib or oth
 And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit is 65535 year. When use
 please set a max timestamp of 2005949145599. (Thanks to Francois Victor "rmslu" fvictor@gmail.lu for the test).
 
-Use "time32lib_test.ino" on example directory for test. 
+Use "Time32Lib_test.ino" on example directory for test. 
 ```
 EPOCH TIME: 2005949145590 Human: 23:59:50 - 31/12/65535 GMT
 EPOCH TIME: 2005949145591 Human: 23:59:51 - 31/12/65535 GMT
@@ -48,7 +48,7 @@ from a computer for time synchronization.
 
 ## Functionality
 
-To use the Time library in an Arduino sketch, include TimeLib.h.
+To use the Time library in an Arduino sketch, include TimeLib32.h.
 
 ```c
 #include <TimeLib32.h>
@@ -157,6 +157,10 @@ illustrating how the library can be used with various time sources:
   of a location for a entire year.
   This requires the Timezone32 and Sunrise libraries. See in my GitHub:
   <https://github.com/RafaelReyesCarmona> 
+
+  - `Time32Lib_test` is similar to TimeSerial, showing epoch unix time and human date conversion (GMT).
+  Use to testing epoch time conversion, using Serial Monitor to set the clock, send 'T2005949145590' 
+  and wait ten seconds. 2005949145599 is the max value for the library.
 
 ## Differences for Time by *Michael Margolis*
 
