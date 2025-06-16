@@ -1,7 +1,7 @@
 <img src="images/icons8-time-machine-48.png" width=48 height=48 align=right>
 
 # Time32 Library
-[![Version: v1.1.3](https://img.shields.io/badge/Version-v1.1.3-blue?style=for-the-badge&logo=v)]()
+[![Version: v1.1.4](https://img.shields.io/badge/Version-v1.1.4-blue?style=for-the-badge&logo=v)]()
 
 Time32 is a library that provides timekeeping functionality for Arduino and ESP32.
 
@@ -13,29 +13,35 @@ to provide an API that is more flexible and easier to use.
 A primary goal was to enable date and time functionality that can be used with
 a variety of external time sources with minimum differences required in sketch logic.
 
-Time32 introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
+Time32 (v1.1.3) introduces changes to prevent "conflicting declaration 'typedef time_t'" on ESP32 
 enviroments. It define new typedef time32_t to avoid conflict with newlib or other libs.
 And it add support to fix 2106 problem when use a 32 mcu like ESP32. The limit is 65535 year. When use
 please set a max timestamp of 2005949145599. (Thanks to Francois Victor "rmslu" fvictor@gmail.lu for the test).
 
-Use "Time32Lib_test.ino" on example directory for test. 
+New version of Time32 extend support at the end of 4294967295 year. Added a new method to calculate time
+translating unix time to gregorian calendar so fastest.
+
+Use "Time32Lib_test.ino" on example directory for test. T135536014634284790
 ```
-EPOCH TIME: 2005949145590 Human: 23:59:50 - 31/12/65535 GMT
-EPOCH TIME: 2005949145591 Human: 23:59:51 - 31/12/65535 GMT
-EPOCH TIME: 2005949145592 Human: 23:59:52 - 31/12/65535 GMT
-EPOCH TIME: 2005949145593 Human: 23:59:53 - 31/12/65535 GMT
-EPOCH TIME: 2005949145594 Human: 23:59:54 - 31/12/65535 GMT
-EPOCH TIME: 2005949145595 Human: 23:59:55 - 31/12/65535 GMT
-EPOCH TIME: 2005949145596 Human: 23:59:56 - 31/12/65535 GMT
-EPOCH TIME: 2005949145597 Human: 23:59:57 - 31/12/65535 GMT
-EPOCH TIME: 2005949145598 Human: 23:59:58 - 31/12/65535 GMT
-EPOCH TIME: 2005949145599 Human: 23:59:59 - 31/12/65535 GMT
-EPOCH TIME: 2005949145600 Human: 0:00:00 - 1/1/0 GMT
-EPOCH TIME: 2005949145601 Human: 0:00:01 - 1/1/0 GMT
-EPOCH TIME: 2005949145602 Human: 0:00:02 - 1/1/0 GMT
-EPOCH TIME: 2005949145603 Human: 0:00:03 - 1/1/0 GMT
-EPOCH TIME: 2005949145604 Human: 0:00:04 - 1/1/0 GMT
-EPOCH TIME: 2005949145605 Human: 0:00:05 - 1/1/0 GMT
+EPOCH TIME: 135536014634284790 Human: 23:59:50 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284791 Human: 23:59:51 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284792 Human: 23:59:52 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284793 Human: 23:59:53 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284794 Human: 23:59:54 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284795 Human: 23:59:55 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284796 Human: 23:59:56 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284797 Human: 23:59:57 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284798 Human: 23:59:58 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284799 Human: 23:59:59 - 31/12/4294967295 GMT
+EPOCH TIME: 135536014634284800 Human: 0:00:00 - 1/1/0 GMT
+EPOCH TIME: 135536014634284801 Human: 0:00:01 - 1/1/0 GMT
+EPOCH TIME: 135536014634284802 Human: 0:00:02 - 1/1/0 GMT
+EPOCH TIME: 135536014634284803 Human: 0:00:03 - 1/1/0 GMT
+EPOCH TIME: 135536014634284804 Human: 0:00:04 - 1/1/0 GMT
+EPOCH TIME: 135536014634284805 Human: 0:00:05 - 1/1/0 GMT
+EPOCH TIME: 135536014634284806 Human: 0:00:06 - 1/1/0 GMT
+EPOCH TIME: 135536014634284807 Human: 0:00:07 - 1/1/0 GMT
+
 ```
 
 New function is implemented to calc leap seconds.
@@ -63,7 +69,7 @@ second();          // the second now (0-59)
 day();             // the day now (1-31)
 weekday();         // day of the week (1-7), Sunday is day 1
 month();           // the month now (1-12)
-year();            // the full four/five digits year: from 1970 to 65535
+year();            // the full digits year: from 1970 to 4294967295 
 ```
 
 there are also functions to return the hour in 12-hour format
@@ -159,8 +165,36 @@ illustrating how the library can be used with various time sources:
   <https://github.com/RafaelReyesCarmona> 
 
 - `Time32Lib_test` is similar to TimeSerial, showing epoch unix time and human date conversion (GMT).
-  Use to testing epoch time conversion, using Serial Monitor to set the clock, send 'T2005949145590' 
-  and wait ten seconds. 2005949145599 is the max value for the library.
+  Use to testing epoch time conversion:
+   * Messages consist of the letter T followed by digits time (as seconds since Jan 1 1970)
+ you can send the text on the next line using Serial Monitor to set the clock to noon Jan 1 2013
+ T1357041600
+  * Typing letter D the clock will set at EPOCH TIME: 2005949145590 Human: 23:59:50 - 31/12/65535 GMT
+Wait ten seconds to see if 65535 year problem is solved.
+  * Message consist of the letter S followed by digits year (S2025) the coclk will be set at 
+00:00:00 - Jan 1 of the give year. 
+
+Some epoch samples to test:
+```
+T1000990619884799   - EPOCH TIME: 1000990619884799 Human: 23:59:59 - 31/12/31.722.099 GMT
+T1570278033964800   - EPOCH TIME: 1570278033964800 Human: 0:00:00 - 1/1/49.762.100 GMT S49762100
+T1696505841964800   - EPOCH TIME: 1696505841964800 Human: 0:00:00 - 1/1/53.762.100 GMT
+T2958783921964800   - EPOCH TIME: 2958783921964800 Human: 0:00:00 - 1/1/93.762.100 GMT S93762100
+T15581564721964800  - EPOCH TIME: 15581564721964800 Human: 0:00:00 - 1/1/493.762.100 GMT S493762100
+T28204345521964800  - EPOCH TIME: 28204345521964800 Human: 0:00:00 - 1/1/893.762.100 GMT S893762100
+T40827126321964800  - EPOCH TIME: 40827126321964800 Human: 0:00:00 - 1/1/1.293.762.100 GMT
+T53449907121964800  - EPOCH TIME: 53449907121964800 Human: 0:00:00 - 1/1/1.693.762.100 GMT
+T66072687921964800  - EPOCH TIME: 66072687921964800 Human: 0:00:00 - 1/1/2.093.762.100 GMT
+T78695468721964800  - EPOCH TIME: 78695468721964800 Human: 0:00:00 - 1/1/2.493.762.100 GMT
+T91318249521964800  - EPOCH TIME: 91318249521964800 Human: 0:00:00 - 1/1/2.893.762.100 GMT
+T103941030321964800 - EPOCH TIME: 103941030321964800 Human: 0:00:00 - 1/1/3.293.762.100 GMT
+T116563811121964800 - EPOCH TIME: 116563811121964800 Human: 0:00:00 - 1/1/3.693.762.100 GMT
+T129186591921964800 - EPOCH TIME: 129186591921964800 Human: 0:00:00 - 1/1/4.093.762.100 GMT
+T129199214702764800 - EPOCH TIME: 129199214702764800 Human: 0:00:00 - 1/1/4.094.162.100 GMT
+T135510605102764800 - EPOCH TIME: 135510605102764800 Human: 0:00:00 - 1/1/4.294.162.100 GMT S4294162100
+T135536008953916800 - EPOCH TIME: 135536008953916800 Human: 0:00:00 - 1/1/4.294.967.116 GMT S4294967116
+T135536014602748800 - EPOCH TIME: 135536014602748800 Human: 0:00:00 - 1/1/4.294.967.295 GMT S4294967295
+```
 
 ## Differences for Time by *Michael Margolis*
 
@@ -201,6 +235,10 @@ breakTime(time, &tm);  // break time_t into elements stored in tm struct
 makeTime(&tm);         // return time_t from elements stored in tm struct
 ```
 ## Changelog
+### V1.1.4
+  *  Added support fix 65535 year problem. Maximal time is epoch 135536014634284799 - 23:59:59 Dec 31 4294967295.
+  * Fast calculate to convert and set epoch unix time to gregorian calendar.
+  * Update leap seconds information until 28th December of 2025 00:00:00 UTC.
 
 ### V1.1.3
   * Fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent a conflict with NEOGPS library.

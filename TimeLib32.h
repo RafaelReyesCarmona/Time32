@@ -12,6 +12,9 @@
   April 05 2023 - fixed leap_seconds function and data.
   April 13 2023 - fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent
 			conflict with NEOGPS library. 
+  Jun 16 2025 - added support fix 65535 year problem. Maximal time is epoch 135536014634284799-
+      23:59:59 Dec 31 4294967295.
+              - fast calculate to convert and set epoch unix time to gregorian calendar.
 */     
 
 #ifndef _Time32_h
@@ -65,7 +68,7 @@ typedef struct  {
   uint8_t Wday;   // day of week, sunday is day 1
   uint8_t Day;
   uint8_t Month; 
-  uint16_t Year;   // offset from 1970; 
+  uint32_t Year;   // offset from 1970 to 4294967295.
 } 	tmElements_t, TimeElements, *tmElementsPtr_t;
 
 //convenience macros to convert to and from tm years 
@@ -87,6 +90,9 @@ typedef time32_t(*getExternalTime)();
 #define SECS_PER_WEEK ((time32_t)(SECS_PER_DAY * DAYS_PER_A_WEEK))
 #define SECS_PER_YEAR ((time32_t)(SECS_PER_DAY * 365UL)) // TODO: ought to handle leap years
 #define SECS_YR_2000  ((time32_t)(946684800UL)) // the time at the start of y2k
+#define CYCLE_TIME ((time32_t)(12622780800ULL)) // epoch of 400 years time.
+#define CYCLE_YEARS (400UL)
+
  
 /* Useful Macros for getting elapsed time */
 #define numberOfSeconds(_time_) ((_time_) % SECS_PER_MIN)  
@@ -130,12 +136,12 @@ int     weekday();         // the weekday now (Sunday is day 1)
 int     weekday(time32_t t); // the weekday for the given time 
 int     month();           // the month now  (Jan is month 1)
 int     month(time32_t t);   // the month for the given time
-uint16_t     year();            // the full four/five digit year: (from 1970 to 65535) 
-uint16_t     year(time32_t t);    // the year for the given time
+uint32_t     year();            // the full four/five digit year: (from 1970 to 65535) 
+uint32_t     year(time32_t t);    // the year for the given time
 
 time32_t now();              // return the current time as seconds since Jan 1 1970 
 void    setTime(time32_t t);
-void    setTime(int hr,int min,int sec,int day, int month, int yr);
+void    setTime(uint8_t hr,uint8_t min,uint8_t sec,uint8_t day, uint8_t month, uint32_t yr);
 void    adjustTime(long adjustment);
 
 /* date strings */ 
@@ -165,4 +171,3 @@ unsigned int leap_seconds(time32_t time); // Calculate leap seconds.
 } // extern "C++"
 #endif // __cplusplus
 #endif /* _Time32_h */
-

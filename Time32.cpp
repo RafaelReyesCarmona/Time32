@@ -40,6 +40,9 @@
   1.1.2 5 Apr 2023 - fixed leap_seconds function and data.
   1.1.3 13 Apr 2023 - fixed definition #define DAYS_PER_A_WEEK ((time32_t)(7UL)) to prevent
 			conflict with NEOGPS library.
+  1.1.4 16 Jun 2025 - added support fix 65535 year problem. Maximal time is epoch 135536014634284799-
+      23:59:59 Dec 31 4294967295.
+                    - fast calculate to convert and set epoch unix time to gregorian calendar.
 */
 
 #if ARDUINO >= 100
@@ -145,11 +148,11 @@ int month(time32_t t) {  // the month for the given time
   return tm.Month;
 }
 
-uint16_t year() {  // as in Processing, the full four digit year: (2009, 2010 etc) 
+uint32_t year() {  // as in Processing, the full four digit year: (2009, 2010 etc) 
   return year(now()); 
 }
 
-uint16_t year(time32_t t) { // the year for the given time
+uint32_t year(time32_t t) { // the year for the given time
   refreshCache(t);
   return tmYearToCalendar(tm.Year);
 }
@@ -168,9 +171,11 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
 // this is a more compact version of the C library localtime function
 // note that year is offset from 1970 !!!
 
-  uint16_t year;
+  uint32_t year;
   uint8_t month, monthLength;
   unsigned long days;
+  uint32_t cycles;
+
 
   #ifdef USE_UINT64_T
   uint64_t time;
@@ -180,6 +185,8 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
   time = (uint32_t)timeInput;
   #endif
 
+  cycles = time / CYCLE_TIME;
+  time -= cycles * CYCLE_TIME;
   tm.Second = time % 60;
   time /= 60; // now it is minutes
   tm.Minute = time % 60;
@@ -188,7 +195,7 @@ void breakTime(time32_t timeInput, tmElements_t &tm){
   time /= 24; // now it is days
   tm.Wday = ((time + 4) % 7) + 1;  // Sunday is day 1 
   
-  year = 0;  
+  year = cycles * CYCLE_YEARS;
   days = 0;
   while((unsigned)(days += (LEAP_YEAR(year) ? 366 : 365)) <= time) {
     year++;
@@ -271,16 +278,21 @@ time32_t makeTime(const tmElements_t &tm){
 // note year argument is offset from 1970 (see macros in time.h to convert to other formats)
 // previous version used full four digit year (or digits since 2000),i.e. 2009 was 2009 or 9
   
-  int i;
+  uint16_t i;
+  uint32_t cycles;
+  uint32_t years;
   #ifdef USE_UINT64_T
   uint64_t seconds;
   #else
   uint32_t seconds;
   #endif
 
+  cycles = tm.Year / (uint32_t)CYCLE_YEARS;
+  seconds = CYCLE_TIME * cycles;
+  years = tm.Year - cycles * (uint32_t)CYCLE_YEARS;
   // seconds from 1970 till 1 jan 00:00:00 of the given year
-  seconds= tm.Year*(SECS_PER_DAY * 365);
-  for (i = 0; i < tm.Year; i++) {
+  seconds+= years*(SECS_PER_DAY * 365);
+  for (i = 0; i < years; i++) {
     if (LEAP_YEAR(i)) {
       seconds += SECS_PER_DAY;   // add extra days for leap years
     }
@@ -361,14 +373,8 @@ void setTime(time32_t t) {
   prevMillis = millis();  // restart counting from now (thanks to Korman for this fix)
 } 
 
-void setTime(int hr,int min,int sec,int dy, int mnth, int yr){
- // year can be given as full four digit year or two digts (2010 or 10 for 2010);  
- //it is converted to years since 1970
-  if( yr > 99)
-      yr = yr - 1970;
-  else
-      yr += 30;  
-  tm.Year = yr;
+void setTime(uint8_t hr,uint8_t min,uint8_t sec,uint8_t dy, uint8_t mnth, uint32_t yr){
+  tm.Year = CalendarYrToTm(yr);
   tm.Month = mnth;
   tm.Day = dy;
   tm.Hour = hr;
