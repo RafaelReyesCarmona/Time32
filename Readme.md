@@ -280,7 +280,7 @@ You should have received a copy of the GNU General Public License along with Tim
 
 ## Authors
 ### Time32
-Copyright © 2022 Francisco Rafael Reyes Carmona.
+Copyright © 2022-2025 Francisco Rafael Reyes Carmona.
 Contact me: rafael.reyes.carmona@gmail.com
 
 ### Time
