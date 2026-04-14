@@ -45,8 +45,8 @@ EPOCH TIME: 135536014634284807 Human: 0:00:07 - 1/1/0 GMT
 ```
 
 New function is implemented to calc leap seconds.
-Info from https://www.iana.org/time-zones Version 2025b tzdb-2025b.tar.lz. Leap seconds info
-is valid until 28th December of 2025 00:00:00 UTC.
+Info from https://www.iana.org/time-zones Version 2026a tzdb-2026a.tar.lz. Leap seconds info
+is valid until 28th December of 2026 00:00:00 UTC. EPOCH TIME 1798416000.
 
 Example sketches are updated to illustrate how similar sketch code can be used with: 
 a Real Time Clock, internet NTP time service, GPS time data, and Serial time messages 
